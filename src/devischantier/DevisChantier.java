@@ -42,7 +42,7 @@ public class DevisChantier extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments test
      */
     public static void main(String[] args) {
         launch(args);
