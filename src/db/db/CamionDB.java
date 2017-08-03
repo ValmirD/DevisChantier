@@ -141,7 +141,7 @@ public class CamionDB {
 
     public static int insertDb(CamionDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.ELEMENT);
+            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
