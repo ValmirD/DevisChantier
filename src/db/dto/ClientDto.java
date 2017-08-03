@@ -5,6 +5,8 @@
  */
 package db.dto;
 
+import java.sql.Date;
+
 /**
  *
  * @author Vali

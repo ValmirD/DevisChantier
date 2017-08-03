@@ -138,7 +138,7 @@ create table CHANTIER (
         id_Client numeric(10) not null,
         id_Devis numeric(10) not null,
         id_Conducteur numeric(10) not null,
-        location varchar(20),
+        localisation varchar(20),
 	designationDuProjet varchar(20),
 	commentaire varchar(500),
 	dateDeCreationProjet date,
