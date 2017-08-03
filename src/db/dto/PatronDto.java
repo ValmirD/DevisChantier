@@ -11,4 +11,12 @@ package db.dto;
  */
 public class PatronDto extends EntityDto<Integer> {
     
+    private boolean validationProjet;
+
+    public PatronDto(int idPatron, boolean validationProjet) {
+        this.id = idPatron;
+        this.validationProjet = validationProjet;
+    }
+    
+    
 }
