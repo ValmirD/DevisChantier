@@ -27,5 +27,27 @@ public class PetitMaterielDuChantierDto extends EntityDto<Integer> {
         this.idChantier = idChantier;
         this.idPetitMateriel = idPetitMateriel;
     }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public Date getDebutDisponibilite() {
+        return debutDisponibilite;
+    }
+
+    public Date getFinDisponibilite() {
+        return finDisponibilite;
+    }
+
+    public int getIdChantier() {
+        return idChantier;
+    }
+
+    public int getIdPetitMateriel() {
+        return idPetitMateriel;
+    }
+    
+    
     
 }

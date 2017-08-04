@@ -11,4 +11,29 @@ package db.dto;
  */
 public class CodeReferenceDuChantierDto extends EntityDto<Integer> {
     
+    private double quantite;
+    private int idChantier;
+    private int idCodeReference;
+
+    public CodeReferenceDuChantierDto(int idCodeReferenceDuChantier, double quantite, int idChantier, int idCodeReference) {
+        this.id = idCodeReferenceDuChantier;
+        this.quantite = quantite;
+        this.idChantier = idChantier;
+        this.idCodeReference = idCodeReference;
+    }
+
+    public double getQuantite() {
+        return quantite;
+    }
+
+    public int getIdChantier() {
+        return idChantier;
+    }
+
+    public int getIdCodeReference() {
+        return idCodeReference;
+    }
+    
+    
+    
 }

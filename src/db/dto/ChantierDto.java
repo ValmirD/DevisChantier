@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author Vali
  */
 public class ChantierDto extends EntityDto<Integer> {
+    
     private int idConducteur;
     private int idOuvrier;
     private int idClient;

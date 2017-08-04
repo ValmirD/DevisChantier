@@ -17,6 +17,11 @@ public class PatronDto extends EntityDto<Integer> {
         this.id = idPatron;
         this.validationProjet = validationProjet;
     }
+
+    public boolean isValidationProjet() {
+        return validationProjet;
+    }
+    
     
     
 }
