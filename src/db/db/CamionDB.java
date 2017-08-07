@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class CamionDB {
 
-    public static List<CamionDto> getAllCamions() throws DevisChantierDbException {
+    public static List<CamionDto> getAllCamion() throws DevisChantierDbException {
         List<CamionDto> elements = getCollection(new CamionSel(0));
         return elements;
     }
