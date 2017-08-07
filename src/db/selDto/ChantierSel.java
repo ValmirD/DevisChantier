@@ -12,6 +12,7 @@ package db.selDto;
 public class ChantierSel {
     
     private int idChantier;
+
     private String localisation;
     private String designationProjet;
     private int idClient;
@@ -26,6 +27,10 @@ public class ChantierSel {
      public ChantierSel(int idChantier) {
         this.idChantier = idChantier;
     }   
+     
+    public int getIdChantier() {
+        return idChantier;
+    }     
 
     public String getLocalisation() {
         return localisation;

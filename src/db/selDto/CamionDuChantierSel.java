@@ -17,7 +17,7 @@ public class CamionDuChantierSel {
         this.idCamionDuChantier = idCamionDuChantier;
     }
 
-    public int getIdCamionDuChantierSel() {
+    public int getIdCamionDuChantier() {
         return idCamionDuChantier;
     }
     

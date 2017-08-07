@@ -26,7 +26,7 @@ public class ChantierDB {
     public static List<ChantierDto> getCollection(ChantierSel sel) throws DevisChantierDbException {
         List<ChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_chantier, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM Chantier ";
+            String query = "Select id_chantier, id_ouvrier, id_client, id_devis, id_conducteur, localisation, designationduprojet, commentaire, datedecreationprojet, datedebutprevue, datedebuteffective, datefinprevue, datefineffective FROM Chantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
@@ -35,37 +35,37 @@ public class ChantierDB {
                 where = where + " id_chantier = ? ";
             }
             
-            /*Pour une valeur string */
-            if (sel.getMarque()!= null && !sel.getMarque().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " marque like ? ";
-            }
+            if (sel.getIdClient() != 0) {
+                where = where + " id_client = ? ";
+            }            
             
             /*Pour une valeur string */
-            if (sel.getModele()!= null && !sel.getModele().equals("")) {
+            if (sel.getDesignationProjet()!= null && !sel.getDesignationProjet().equals("")) {
                 if (!where.equals("")) {
                     where = where + " AND ";
                 }
-                where = where + " modele like ? ";
+                where = where + " designationduprojet like ? ";
             }
-                        
+            
+          
             if (where.length() != 0) {
                 where = " where " + where;
                 query = query + where;
                 stmt = connexion.prepareStatement(query);
                 int i = 1;
+                
                 if (sel.getIdChantier() != 0) {
                     stmt.setInt(i, sel.getIdChantier());
                     i++;
                 }
-                if (sel.getMarque() != null && !sel.getMarque().equals("")) {
-                    stmt.setString(i, sel.getMarque() + "%");
+                
+                if (sel.getIdClient() != 0) {
+                    stmt.setInt(i, sel.getIdClient());
                     i++;
-                }
-                if (sel.getModele() != null && !sel.getModele().equals("")) {
-                    stmt.setString(i, sel.getModele() + "%");
+                }                
+
+                if (sel.getDesignationProjet() != null && !sel.getDesignationProjet().equals("")) {
+                    stmt.setString(i, sel.getDesignationProjet() + "%");
                     i++;
                 }
             } else {
@@ -75,16 +75,18 @@ public class ChantierDB {
             while (rs.next()) {
                 al.add(new ChantierDto(
                         rs.getInt("idChantier"), 
-                        rs.getString("categorie"), 
-                        rs.getInt("tonnage"), 
-                        rs.getDouble("capacite"),
-                        rs.getBoolean("location"),
-                        rs.getString("marque"),
-                        rs.getString("modele"),
-                        rs.getString("numeroChassis"),
-                        rs.getString("carburant"),
-                        rs.getDouble("prixHtva"),
-                        rs.getDouble("ctAmortMois")
+                        rs.getInt("idOuvrier"), 
+                        rs.getInt("idClient"), 
+                        rs.getInt("idDevis"),
+                        rs.getInt("idConducteur"),
+                        rs.getString("localisation"),
+                        rs.getString("designationProjet"),
+                        rs.getString("commentaire"),
+                        rs.getDate("dateCreationProjet"),
+                        rs.getDate("dateDebutPrevue"),
+                        rs.getDate("dateDebutEffective"),
+                        rs.getDate("dateFinPrevue"),                        
+                        rs.getDate("dateFinEffective")
                 )
                 );
             }
@@ -109,30 +111,33 @@ public class ChantierDB {
 
             java.sql.PreparedStatement update;
             String sql = "Update Chantier set "
-                    + "categorie=? "
-                    + "tonnage=? "
-                    + "capacite=? "
-                    + "location=? "
-                    + "marque=? "
-                    + "modele=? "
-                    + "numeroChassis=? "
-                    + "carburant=? "
-                    + "prixHtva=? "
-                    + "ctAmortMois=? "
+                    + "idOuvrier=? "
+                    + "idClient=? "
+                    + "idDevis=? "
+                    + "idConducteur=? "
+                    + "localisation=? "
+                    + "designationDuProjet=? "
+                    + "commentaire=? "
+                    + "dateDeCreationProjet=? "
+                    + "dateDebutPrevue=? "
+                    + "dateDebutEffective=? "
+                    + "dateFinPrevue=? "
+                    + "dateFinEffective=? "
                     + "where idChantier=?";
             System.out.println(sql);
             update = connexion.prepareStatement(sql);
-            update.setString(1, el.getCategorie());
-            update.setInt(2, el.getTonnage());
-            update.setDouble(3, el.getCapacite());
-            update.setBoolean(4, el.isLocation());
-            update.setString(5, el.getMarque());
-            update.setString(6, el.getModele());
-            update.setString(7, el.getNumeroChassis());
-            update.setString(8, el.getCarburant());
-            update.setDouble(9, el.getPrixHtva());
-            update.setDouble(10, el.getCtAmortMois());
-            update.setInt(11, el.getId());
+            update.setInt(1, el.getIdOuvrier());
+            update.setInt(2, el.getIdClient());
+            update.setInt(3, el.getIdDevis());
+            update.setInt(4, el.getIdConducteur());
+            update.setString(5, el.getLocalisation());
+            update.setString(6, el.getDesignationProjet());
+            update.setString(7, el.getCommentaire());
+            update.setDate(8, el.getDateDebutPrevue());
+            update.setDate(10, el.getDateDebutEffective());
+            update.setDate(9, el.getDateFinPrevue());            
+            update.setDate(11, el.getDateFinEffective());
+            update.setInt(12, el.getId());
             update.executeUpdate();
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("Chantier, modification impossible:\n" + ex.getMessage());
@@ -141,23 +146,25 @@ public class ChantierDB {
 
     public static int insertDb(ChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.CHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into Chantier(idChantier, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixHtva, ctAmortMois) "
-                    + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "Insert into Chantier(idChantier, idOuvrier, idClient, idDevis, idConducteur, localisation, designationProjet, commentaire, dateCreationProjet, dateDebutprevue, dateDebutEffective, dateFinPrevue, dateFinEffective) "
+                    + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insert.setInt(1, el.getId());
-            insert.setString(2, el.getCategorie());
-            insert.setInt(3, el.getTonnage());
-            insert.setDouble(4, el.getCapacite());
-            insert.setBoolean(5, el.isLocation());
-            insert.setString(6, el.getMarque());
-            insert.setString(7, el.getModele());
-            insert.setString(8, el.getNumeroChassis());
-            insert.setString(9, el.getCarburant());
-            insert.setDouble(10, el.getPrixHtva());
-            insert.setDouble(11, el.getCtAmortMois());
+            insert.setInt(2, el.getIdOuvrier());
+            insert.setInt(3, el.getIdClient());
+            insert.setInt(4, el.getIdDevis());
+            insert.setInt(5, el.getIdConducteur());
+            insert.setString(6, el.getLocalisation());
+            insert.setString(7, el.getDesignationProjet());
+            insert.setString(8, el.getCommentaire());
+            insert.setDate(9, el.getDateCreationProjet());
+            insert.setDate(10, el.getDateDebutPrevue());
+            insert.setDate(11, el.getDateDebutEffective());
+            insert.setDate(12, el.getDateFinPrevue());
+            insert.setDate(13, el.getDateFinEffective());
             insert.executeUpdate();
             return num;
         } catch (DevisChantierDbException | SQLException ex) {

@@ -26,7 +26,7 @@ public class ChantierDto extends EntityDto<Integer> {
     private Date dateFinPrevue;
     private Date dateFinEffective;
 
-    public ChantierDto(int idChantier, int idConducteur, int idOuvrier, int idClient, int idDevis, String localisation, String designationProjet, String commentaire, Date dateCreationProjet, Date dateDebutPrevue, Date dateFinPrevue) {
+    public ChantierDto(int idChantier, int idConducteur, int idOuvrier, int idClient, int idDevis, String localisation, String designationProjet, String commentaire, Date dateCreationProjet, Date dateDebutPrevue, Date dateDebutEffective, Date dateFinPrevue, Date dateFinEffective) {
         this.id = idChantier;
         this.idConducteur = idConducteur;
         this.idOuvrier = idOuvrier;
@@ -37,7 +37,9 @@ public class ChantierDto extends EntityDto<Integer> {
         this.commentaire = commentaire;
         this.dateCreationProjet = dateCreationProjet;
         this.dateDebutPrevue = dateDebutPrevue;
+        this.dateDebutPrevue = dateDebutEffective;
         this.dateFinPrevue = dateFinPrevue;
+        this.dateFinPrevue = dateFinEffective;
     }
 
     public int getIdConducteur() {
