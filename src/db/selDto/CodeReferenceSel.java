@@ -11,4 +11,26 @@ package db.selDto;
  */
 public class CodeReferenceSel {
     
+    private int idCodeReference;
+    private String reference;
+
+    public CodeReferenceSel(int idCodeReference, String reference) {
+        this.idCodeReference = idCodeReference;
+        this.reference = reference;
+    }
+    
+        public CodeReferenceSel(int idCodeReference) {
+        this.idCodeReference = idCodeReference;
+    }
+
+    public int getIdCodeReference() {
+        return idCodeReference;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+        
+    
+    
 }

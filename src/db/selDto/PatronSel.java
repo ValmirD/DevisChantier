@@ -11,4 +11,15 @@ package db.selDto;
  */
 public class PatronSel {
     
+    private int idPatron;
+
+    public PatronSel(int idPatron) {
+        this.idPatron = idPatron;
+    }
+
+    public int getIdPatron() {
+        return idPatron;
+    }
+    
+    
 }

@@ -12,15 +12,27 @@ package db.selDto;
 
 public class ConducteurSel {
     
+    private int idConducteur;
     private String nom;
     private String prenom;
     private String numeroTelephone;
+    private String email;
 
-    public ConducteurSel(String nom, String prenom, String numeroTelephone) {
+    public ConducteurSel(int idConducteur, String nom, String prenom, String numeroTelephone, String email) {
+        this.idConducteur = idConducteur;
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTelephone = numeroTelephone;
+        this.email = email;
+    }
+    
+    public ConducteurSel(int idConducteur) {
+        this.idConducteur = idConducteur;
     }    
+
+    public int getIdConducteur() {
+        return idConducteur;
+    }
 
     public String getNom() {
         return nom;
@@ -32,5 +44,13 @@ public class ConducteurSel {
 
     public String getNumeroTelephone() {
         return numeroTelephone;
-    }   
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    
+    
+
+    
 }

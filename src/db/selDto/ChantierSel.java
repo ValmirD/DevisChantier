@@ -11,15 +11,21 @@ package db.selDto;
  */
 public class ChantierSel {
     
+    private int idChantier;
     private String localisation;
     private String designationProjet;
     private int idClient;
 
-    public ChantierSel(String localisation, String designationProjet, int idClient) {
+    public ChantierSel(int idChantier, String localisation, String designationProjet, int idClient) {
+        this.idChantier = idChantier;
         this.localisation = localisation;
         this.designationProjet = designationProjet;
         this.idClient = idClient;
     }
+    
+     public ChantierSel(int idChantier) {
+        this.idChantier = idChantier;
+    }   
 
     public String getLocalisation() {
         return localisation;

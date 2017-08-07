@@ -11,4 +11,43 @@ package db.selDto;
  */
 public class ClientSel {
     
+    private int idClient;
+    private String nom;
+    private String prenom;
+    private String numeroTelephone;
+    private String email;
+
+    public ClientSel(int idClient, String nom, String prenom, String numeroTelephone, String email) {
+        this.idClient = idClient;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.numeroTelephone = numeroTelephone;
+        this.email = email;
+    }
+
+        public ClientSel(int idClient) {
+        this.idClient = idClient;
+    }
+
+    public int getIdClient() {
+        return idClient;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getNumeroTelephone() {
+        return numeroTelephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    
 }

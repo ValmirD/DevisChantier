@@ -11,4 +11,16 @@ package db.selDto;
  */
 public class CamionDuChantierSel {
     
+    private int idCamionDuChantier;
+
+    public CamionDuChantierSel(int idCamionDuChantier) {
+        this.idCamionDuChantier = idCamionDuChantier;
+    }
+
+    public int getIdCamionDuChantierSel() {
+        return idCamionDuChantier;
+    }
+    
+    
+    
 }

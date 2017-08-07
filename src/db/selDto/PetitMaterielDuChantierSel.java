@@ -11,4 +11,16 @@ package db.selDto;
  */
 public class PetitMaterielDuChantierSel {
     
+    private int PetitMaterielDuChantier;
+
+    public PetitMaterielDuChantierSel(int PetitMaterielDuChantier) {
+        this.PetitMaterielDuChantier = PetitMaterielDuChantier;
+    }
+
+    public int getPetitMaterielDuChantier() {
+        return PetitMaterielDuChantier;
+    }
+    
+    
+    
 }

@@ -11,4 +11,38 @@ package db.selDto;
  */
 public class VoitureSel {
     
+    private int idVoiture;
+    private String marque;
+    private String modele;
+    private String numeroChassis;
+
+    public VoitureSel(int idVoiture, String marque, String modele, String numeroChassis) {
+        this.idVoiture = idVoiture;
+        this.marque = marque;
+        this.modele = modele;
+        this.numeroChassis = numeroChassis;
+    }
+    
+    public VoitureSel(int idVoiture) {
+        this.idVoiture = idVoiture;
+    }    
+
+    public int getIdVoiture() {
+        return idVoiture;
+    }
+
+    public String getMarque() {
+        return marque;
+    }
+
+    public String getModele() {
+        return modele;
+    }
+
+    public String getNumeroChassis() {
+        return numeroChassis;
+    }
+    
+    
+    
 }
