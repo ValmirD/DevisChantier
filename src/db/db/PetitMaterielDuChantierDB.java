@@ -5,6 +5,13 @@
  */
 package db.db;
 
+import db.dto.PetitMaterielDuChantierDto;
+import db.exception.DevisChantierDbException;
+import db.selDto.PetitMaterielDuChantierSel;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Vali

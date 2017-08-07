@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  *
- * @author Marco
+ * @author Vali
  */
 public class CamionDB {
 
