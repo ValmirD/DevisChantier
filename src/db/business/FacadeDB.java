@@ -80,7 +80,7 @@ public class FacadeDB {
         }
     }
 
-    public static int updateCamion(CamionDto caDto) throws DevisChantierBusinessException {
+    public static void updateCamion(CamionDto caDto) throws DevisChantierBusinessException {
         try {
             DBManager.startTransaction();
             CamionBL.update(caDto);
@@ -97,7 +97,7 @@ public class FacadeDB {
         }
     }
 
-    public static int deleteCamion(int idCamion) throws DevisChantierBusinessException {
+    public static void deleteCamion(int idCamion) throws DevisChantierBusinessException {
         try {
             DBManager.startTransaction();
             CamionBL.delete(idCamion);
