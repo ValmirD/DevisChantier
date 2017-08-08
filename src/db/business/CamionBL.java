@@ -13,8 +13,23 @@ import java.util.Collection;
 
 /**
  *
- * @author Marco
+ * @author Vali
  */
 public class CamionBL {
+    
+        static CamionDto findById(int id) throws DevisChantierDbException {
+        CamionSel sel = new CamionSel(id);
+        Collection<CamionDto> col = CamionDB.getCollection(sel);
+        if (col.size() == 1) {
+            return col.iterator().next();
+        } else {
+            return null;
+        }
+    }
+    
+    static Collection<CamionDto> findBySel(CamionSel sel) throws DevisChantierDbException {
+        Collection<CamionDto> col = CamionDB.getCollection(sel);
+        return col;
+    }
     
 }
