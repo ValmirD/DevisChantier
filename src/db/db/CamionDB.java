@@ -26,13 +26,13 @@ public class CamionDB {
     public static List<CamionDto> getCollection(CamionSel sel) throws DevisChantierDbException {
         List<CamionDto> al = new ArrayList<>();
         try {
-            String query = "Select id_camion, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM Camion ";
+            String query = "Select idCamion, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixhtva, ctamortmois FROM Camion ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdCamion() != 0) {
-                where = where + " id_camion = ? ";
+                where = where + " idCamion = ? ";
             }
             
             /*Pour une valeur string */

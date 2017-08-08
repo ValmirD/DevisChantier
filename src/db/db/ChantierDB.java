@@ -26,17 +26,17 @@ public class ChantierDB {
     public static List<ChantierDto> getCollection(ChantierSel sel) throws DevisChantierDbException {
         List<ChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_chantier, id_ouvrier, id_client, id_devis, id_conducteur, localisation, designationduprojet, commentaire, datedecreationprojet, datedebutprevue, datedebuteffective, datefinprevue, datefineffective FROM Chantier ";
+            String query = "Select idChantier, idOuvrier, idClient, idDevis, idConducteur, localisation, designationduprojet, commentaire, dateCreationprojet, datedebutprevue, datedebuteffective, datefinprevue, datefineffective FROM Chantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdChantier() != 0) {
-                where = where + " id_chantier = ? ";
+                where = where + " idChantier = ? ";
             }
             
             if (sel.getIdClient() != 0) {
-                where = where + " id_client = ? ";
+                where = where + " idClient = ? ";
             }            
             
             /*Pour une valeur string */
@@ -118,7 +118,7 @@ public class ChantierDB {
                     + "localisation=? "
                     + "designationDuProjet=? "
                     + "commentaire=? "
-                    + "dateDeCreationProjet=? "
+                    + "dateCreationProjet=? "
                     + "dateDebutPrevue=? "
                     + "dateDebutEffective=? "
                     + "dateFinPrevue=? "

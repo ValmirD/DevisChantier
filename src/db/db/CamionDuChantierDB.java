@@ -27,13 +27,13 @@ public class CamionDuChantierDB {
     public static List<CamionDuChantierDto> getCollection(CamionDuChantierSel sel) throws DevisChantierDbException {
         List<CamionDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_camion_du_chantier, id_chantier, id_camion, quantite, nombreheures, debutdisponibilite, findisponibilite FROM CamionDuChantier ";
+            String query = "Select idCamionDuChantier, idChantier, idCamion, quantite, nombreheures, debutdisponibilite, findisponibilite FROM CamionDuChantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdCamionDuChantier() != 0) {
-                where = where + " id_camion_du_chantier = ? ";
+                where = where + " idCamionDuChantier = ? ";
             }
 
             if (where.length() != 0) {
@@ -106,7 +106,7 @@ public class CamionDuChantierDB {
 
     public static int insertDb(CamionDuChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION_DU_CHANTIER);
+            int num = SequenceDB.getNextNum(SequenceDB.CAMIONDUCHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(

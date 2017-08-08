@@ -8,26 +8,26 @@ import db.exception.DevisChantierDbException;
 public class SequenceDB {
 
     static final String CAMION = "CAMION";
-    static final String CAMION_DU_CHANTIER = "CAMION_DU_CHANTIER";
+    static final String CAMIONDUCHANTIER = "CAMIONDUCHANTIER";
     static final String CHANTIER = "CHANTIER";
     static final String CLIENT = "CLIENT";
-    static final String CODE_REFERENCE = "CODE_REFERENCE";
-    static final String CODE_REFERENCE_DU_CHANTIER = "CODE_REFERENCE_DU_CHANTIER";
+    static final String CODEREFERENCE = "CODEREFERENCE";
+    static final String CODEREFERENCEDUCHANTIER = "CODEREFERENCEDUCHANTIER";
     static final String CONDUCTEUR = "CONDUCTEUR";
-    static final String CONDUCTEUR_DU_CHANTIER = "CONDUCTEUR_DU_CHANTIER";
+    static final String CONDUCTEURDUCHANTIER = "CONDUCTEURDUCHANTIER";
     static final String DEVIS = "DEVIS";
     static final String ENGIN = "ENGIN";
-    static final String ENGIN_DU_CHANTIER = "ENGIN_DU_CHANTIER";
+    static final String ENGINDUCHANTIER = "ENGINDUCHANTIER";
     static final String MATERIAU = "MATERIAU";
-    static final String MATERIAU_DU_CHANTIER = "MATERIAU_DU_CHANTIER";
+    static final String MATERIAUDUCHANTIER = "MATERIAUDUCHANTIER";
     static final String OUVRIER = "OUVRIER";
-    static final String OUVRIER_DU_CHANTIER = "OUVRIER_DU_CHANTIER";
+    static final String OUVRIERDUCHANTIER = "OUVRIERDUCHANTIER";
     static final String PATRON = "PATRON";
-    static final String PETIT_MATERIEL = "PETIT_MATERIEL";
-    static final String PETIT_MATERIEL_DU_CHANTIER = "PETIT_MATERIEL_DU_CHANTIER";
+    static final String PETITMATERIEL = "PETITMATERIEL";
+    static final String PETITMATERIELDUCHANTIER = "PETITMATERIELDUCHANTIER";
     static final String SEQUENCES = "SEQUENCES";
     static final String VOITURE = "VOITURE";
-    static final String VOITURE_DU_CHANTIER = "VOITURE_DU_CHANTIER";
+    static final String VOITUREDUCHANTIER = "VOITUREDUCHANTIER";
 
     static synchronized int getNextNum(String sequence) throws DevisChantierDbException {
         try {

@@ -26,14 +26,14 @@ public class ClientDB {
     public static List<ClientDto> getCollection(ClientSel sel) throws DevisChantierDbException {
         List<ClientDto> al = new ArrayList<>();
         try {
-            String query = "Select id_client, nom, prenom, datedenaissance, numerotelephone, email FROM Client ";
+            String query = "Select idClient, nom, prenom, dateNaissance, numeroTelephone, email FROM Client ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             
             /*Pour une valeur numerique */
             if (sel.getIdClient() != 0) {
-                where = where + " id_client = ? ";
+                where = where + " idClient = ? ";
             }
             
             /*Pour une valeur string */
