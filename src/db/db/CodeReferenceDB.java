@@ -110,7 +110,7 @@ public class CodeReferenceDB {
 
     public static int insertDb(CodeReferenceDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.CODEREFERENCE);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(

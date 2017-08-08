@@ -140,7 +140,7 @@ public class OuvrierDB {
 
     public static int insertDb(OuvrierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.OUVRIERDUCHANTIER);
+            int num = SequenceDB.getNextNum(SequenceDB.OUVRIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(

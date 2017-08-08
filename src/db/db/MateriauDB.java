@@ -48,7 +48,7 @@ public class MateriauDB {
                 if (!where.equals("")) {
                     where = where + " AND ";
                 }
-                where = where + " type like ? ";
+                where = where + " type_ like ? ";
             }
             
             /*Pour une valeur string */
@@ -166,7 +166,7 @@ public class MateriauDB {
 
     public static int insertDb(MateriauDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.MATERIAU);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(

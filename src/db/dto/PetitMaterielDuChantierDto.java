@@ -13,13 +13,13 @@ import java.sql.Date;
  */
 public class PetitMaterielDuChantierDto extends EntityDto<Integer> {
     
-    private int quantite;
+    private Double quantite;
     private Date debutDisponibilite;
     private Date finDisponibilite;
     private int idChantier;
     private int idPetitMateriel;
 
-    public PetitMaterielDuChantierDto(int idPetitMaterielDuChantier, int quantite, Date debutDisponibilite, Date finDisponibilite, int idChantier, int idPetitMateriel) {
+    public PetitMaterielDuChantierDto(int idPetitMaterielDuChantier, Double quantite, Date debutDisponibilite, Date finDisponibilite, int idChantier, int idPetitMateriel) {
         this.id = idPetitMaterielDuChantier;
         this.quantite = quantite;
         this.debutDisponibilite = debutDisponibilite;
@@ -28,7 +28,7 @@ public class PetitMaterielDuChantierDto extends EntityDto<Integer> {
         this.idPetitMateriel = idPetitMateriel;
     }
 
-    public int getQuantite() {
+    public Double getQuantite() {
         return quantite;
     }
 

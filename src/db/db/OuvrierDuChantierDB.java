@@ -26,30 +26,15 @@ public class OuvrierDuChantierDB {
     public static List<OuvrierDuChantierDto> getCollection(OuvrierDuChantierSel sel) throws DevisChantierDbException {
         List<OuvrierDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_ouvrierDuChantier, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM OuvrierDuChantier ";
+            String query = "Select idOuvrierDuChantier, idChantier, idOuvrier, dateDebut, dateFin, nombreHeures FROM OuvrierDuChantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdOuvrierDuChantier() != 0) {
-                where = where + " id_ouvrierDuChantier = ? ";
+                where = where + " idOuvrierDuChantier = ? ";
             }
             
-            /*Pour une valeur string */
-            if (sel.getMarque()!= null && !sel.getMarque().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " marque like ? ";
-            }
-            
-            /*Pour une valeur string */
-            if (sel.getModele()!= null && !sel.getModele().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " modele like ? ";
-            }
                         
             if (where.length() != 0) {
                 where = " where " + where;
@@ -60,14 +45,7 @@ public class OuvrierDuChantierDB {
                     stmt.setInt(i, sel.getIdOuvrierDuChantier());
                     i++;
                 }
-                if (sel.getMarque() != null && !sel.getMarque().equals("")) {
-                    stmt.setString(i, sel.getMarque() + "%");
-                    i++;
-                }
-                if (sel.getModele() != null && !sel.getModele().equals("")) {
-                    stmt.setString(i, sel.getModele() + "%");
-                    i++;
-                }
+
             } else {
                 stmt = connexion.prepareStatement(query);
             }
@@ -75,16 +53,11 @@ public class OuvrierDuChantierDB {
             while (rs.next()) {
                 al.add(new OuvrierDuChantierDto(
                         rs.getInt("idOuvrierDuChantier"), 
-                        rs.getString("categorie"), 
-                        rs.getInt("tonnage"), 
-                        rs.getDouble("capacite"),
-                        rs.getBoolean("location"),
-                        rs.getString("marque"),
-                        rs.getString("modele"),
-                        rs.getString("numeroChassis"),
-                        rs.getString("carburant"),
-                        rs.getDouble("prixHtva"),
-                        rs.getDouble("ctAmortMois")
+                        rs.getDate("dateDebut"), 
+                        rs.getDate("dateFin"), 
+                        rs.getDouble("nombreHeures"),
+                        rs.getInt("idChantier"),
+                        rs.getInt("idOuvrier")                     
                 )
                 );
             }
@@ -109,30 +82,19 @@ public class OuvrierDuChantierDB {
 
             java.sql.PreparedStatement update;
             String sql = "Update OuvrierDuChantier set "
-                    + "categorie=? "
-                    + "tonnage=? "
-                    + "capacite=? "
-                    + "location=? "
-                    + "marque=? "
-                    + "modele=? "
-                    + "numeroChassis=? "
-                    + "carburant=? "
-                    + "prixHtva=? "
-                    + "ctAmortMois=? "
+                    + "idChantier=? "
+                    + "idOuvrier=? "
+                    + "dateDebut=? "
+                    + "dateFin=? "
+                    + "nombreHeures=? "
                     + "where idOuvrierDuChantier=?";
             System.out.println(sql);
             update = connexion.prepareStatement(sql);
-            update.setString(1, el.getCategorie());
-            update.setInt(2, el.getTonnage());
-            update.setDouble(3, el.getCapacite());
-            update.setBoolean(4, el.isLocation());
-            update.setString(5, el.getMarque());
-            update.setString(6, el.getModele());
-            update.setString(7, el.getNumeroChassis());
-            update.setString(8, el.getCarburant());
-            update.setDouble(9, el.getPrixHtva());
-            update.setDouble(10, el.getCtAmortMois());
-            update.setInt(11, el.getId());
+            update.setInt(1, el.getIdChantier());
+            update.setInt(2, el.getIdOuvrier());
+            update.setDate(3, el.getDateDebut());
+            update.setDate(4, el.getDateFin());
+            update.setDouble(11, el.getNombreHeures());
             update.executeUpdate();
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("OuvrierDuChantier, modification impossible:\n" + ex.getMessage());
@@ -141,23 +103,18 @@ public class OuvrierDuChantierDB {
 
     public static int insertDb(OuvrierDuChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.OUVRIERDUCHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into OuvrierDuChantier(idOuvrierDuChantier, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixHtva, ctAmortMois) "
-                    + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "Insert into OuvrierDuChantier(idOuvrierDuChantier, idChantier, idOuvrier, dateDebut, dateFin, nombreHeures) "
+                    + "values(?, ?, ?, ?, ?, ?)");
             insert.setInt(1, el.getId());
-            insert.setString(2, el.getCategorie());
-            insert.setInt(3, el.getTonnage());
-            insert.setDouble(4, el.getCapacite());
-            insert.setBoolean(5, el.isLocation());
-            insert.setString(6, el.getMarque());
-            insert.setString(7, el.getModele());
-            insert.setString(8, el.getNumeroChassis());
-            insert.setString(9, el.getCarburant());
-            insert.setDouble(10, el.getPrixHtva());
-            insert.setDouble(11, el.getCtAmortMois());
+            insert.setInt(2, el.getIdChantier());
+            insert.setInt(3, el.getIdOuvrier());
+            insert.setDate(4, el.getDateDebut());
+            insert.setDate(5, el.getDateFin());
+            insert.setDouble(6, el.getNombreHeures());
             insert.executeUpdate();
             return num;
         } catch (DevisChantierDbException | SQLException ex) {

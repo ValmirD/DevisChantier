@@ -26,13 +26,13 @@ public class VoitureDB {
     public static List<VoitureDto> getCollection(VoitureSel sel) throws DevisChantierDbException {
         List<VoitureDto> al = new ArrayList<>();
         try {
-            String query = "Select id_voiture, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM Voiture ";
+            String query = "Select idVoiture, attacheRemorque, marque, modele, numeroChassis, carburant, ctAmortMois FROM Voiture ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdVoiture() != 0) {
-                where = where + " id_voiture = ? ";
+                where = where + " idVoiture = ? ";
             }
             
             /*Pour une valeur string */
@@ -75,16 +75,12 @@ public class VoitureDB {
             while (rs.next()) {
                 al.add(new VoitureDto(
                         rs.getInt("idVoiture"), 
-                        rs.getString("categorie"), 
-                        rs.getInt("tonnage"), 
-                        rs.getDouble("capacite"),
-                        rs.getBoolean("location"),
-                        rs.getString("marque"),
+                        rs.getBoolean("attacheRemorque"), 
+                        rs.getString("marque"), 
                         rs.getString("modele"),
                         rs.getString("numeroChassis"),
                         rs.getString("carburant"),
-                        rs.getDouble("prixHtva"),
-                        rs.getDouble("ctAmortMois")
+                        rs.getDouble("ctAmortMois")                     
                 )
                 );
             }
@@ -109,30 +105,22 @@ public class VoitureDB {
 
             java.sql.PreparedStatement update;
             String sql = "Update Voiture set "
-                    + "categorie=? "
-                    + "tonnage=? "
-                    + "capacite=? "
-                    + "location=? "
+                    + "attacheRemorque=? "
                     + "marque=? "
                     + "modele=? "
                     + "numeroChassis=? "
                     + "carburant=? "
-                    + "prixHtva=? "
                     + "ctAmortMois=? "
                     + "where idVoiture=?";
             System.out.println(sql);
             update = connexion.prepareStatement(sql);
-            update.setString(1, el.getCategorie());
-            update.setInt(2, el.getTonnage());
-            update.setDouble(3, el.getCapacite());
-            update.setBoolean(4, el.isLocation());
-            update.setString(5, el.getMarque());
-            update.setString(6, el.getModele());
-            update.setString(7, el.getNumeroChassis());
-            update.setString(8, el.getCarburant());
-            update.setDouble(9, el.getPrixHtva());
-            update.setDouble(10, el.getCtAmortMois());
-            update.setInt(11, el.getId());
+            update.setBoolean(1, el.isAttacheRemorque());
+            update.setString(2, el.getMarque());
+            update.setString(3, el.getModele());
+            update.setString(4, el.getNumeroDeChassis());
+            update.setString(5, el.getCarburant());
+            update.setDouble(6, el.getCtAmortMois());
+            update.setInt(7, el.getId());
             update.executeUpdate();
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("Voiture, modification impossible:\n" + ex.getMessage());
@@ -141,23 +129,19 @@ public class VoitureDB {
 
     public static int insertDb(VoitureDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.VOITURE);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into Voiture(idVoiture, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixHtva, ctAmortMois) "
-                    + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "Insert into Voiture(idVoiture, attacheRemorque, marque, modele, numeroChassis, carburant, ctAmortMois) "
+                    + "values(?, ?, ?, ?, ?, ?, ?)");
             insert.setInt(1, el.getId());
-            insert.setString(2, el.getCategorie());
-            insert.setInt(3, el.getTonnage());
-            insert.setDouble(4, el.getCapacite());
-            insert.setBoolean(5, el.isLocation());
-            insert.setString(6, el.getMarque());
-            insert.setString(7, el.getModele());
-            insert.setString(8, el.getNumeroChassis());
-            insert.setString(9, el.getCarburant());
-            insert.setDouble(10, el.getPrixHtva());
-            insert.setDouble(11, el.getCtAmortMois());
+            insert.setBoolean(2, el.isAttacheRemorque());
+            insert.setString(3, el.getMarque());
+            insert.setString(4, el.getModele());
+            insert.setString(5, el.getNumeroDeChassis());
+            insert.setString(6, el.getCarburant());
+            insert.setDouble(7, el.getCtAmortMois());
             insert.executeUpdate();
             return num;
         } catch (DevisChantierDbException | SQLException ex) {

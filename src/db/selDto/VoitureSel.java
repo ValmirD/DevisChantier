@@ -14,13 +14,11 @@ public class VoitureSel {
     private int idVoiture;
     private String marque;
     private String modele;
-    private String numeroChassis;
 
-    public VoitureSel(int idVoiture, String marque, String modele, String numeroChassis) {
+    public VoitureSel(int idVoiture, String marque, String modele) {
         this.idVoiture = idVoiture;
         this.marque = marque;
         this.modele = modele;
-        this.numeroChassis = numeroChassis;
     }
     
     public VoitureSel(int idVoiture) {
@@ -39,9 +37,6 @@ public class VoitureSel {
         return modele;
     }
 
-    public String getNumeroChassis() {
-        return numeroChassis;
-    }
     
     
     

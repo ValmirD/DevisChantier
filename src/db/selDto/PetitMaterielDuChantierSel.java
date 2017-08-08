@@ -11,14 +11,14 @@ package db.selDto;
  */
 public class PetitMaterielDuChantierSel {
     
-    private int PetitMaterielDuChantier;
+    private int idPetitMaterielDuChantier;
 
-    public PetitMaterielDuChantierSel(int PetitMaterielDuChantier) {
-        this.PetitMaterielDuChantier = PetitMaterielDuChantier;
+    public PetitMaterielDuChantierSel(int idPetitMaterielDuChantier) {
+        this.idPetitMaterielDuChantier = idPetitMaterielDuChantier;
     }
 
-    public int getPetitMaterielDuChantier() {
-        return PetitMaterielDuChantier;
+    public int getidPetitMaterielDuChantier() {
+        return idPetitMaterielDuChantier;
     }
     
     
