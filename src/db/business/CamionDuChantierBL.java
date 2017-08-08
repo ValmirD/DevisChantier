@@ -18,6 +18,24 @@ import java.util.Collection;
  */
 public class CamionDuChantierBL {
     
+    static int add(CamionDuChantierDto el) throws DevisChantierDbException {
+        return CamionDuChantierDB.insertDb(el);
+    }
+
+    static void delete(int id) throws DevisChantierDbException {
+        CamionDuChantierDB.deleteDb(id);
+    }
+
+    static void update(CamionDuChantierDto el) throws DevisChantierDbException {
+        CamionDuChantierDB.updateDb(el);
+    }
+    
+    static Collection<CamionDuChantierDto> findAll() throws DevisChantierDbException {
+        CamionDuChantierSel sel = new CamionDuChantierSel(0);
+        Collection<CamionDuChantierDto> col = CamionDuChantierDB.getCollection(sel);
+        return col;
+    }    
+    
     static CamionDuChantierDto findById(int id) throws DevisChantierDbException {
         CamionDuChantierSel sel = new CamionDuChantierSel(id);
         Collection<CamionDuChantierDto> col = CamionDuChantierDB.getCollection(sel);

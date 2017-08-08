@@ -17,15 +17,23 @@ import java.util.Collection;
  */
 public class CamionBL {
     
-        static CamionDto findById(int id) throws DevisChantierDbException {
-        CamionSel sel = new CamionSel(id);
-        Collection<CamionDto> col = CamionDB.getCollection(sel);
-        if (col.size() == 1) {
-            return col.iterator().next();
-        } else {
-            return null;
-        }
+    static int add(CamionDto el) throws DevisChantierDbException {
+        return CamionDB.insertDb(el);
     }
+
+    static void delete(int id) throws DevisChantierDbException {
+        CamionDB.deleteDb(id);
+    }
+
+    static void update(CamionDto el) throws DevisChantierDbException {
+        CamionDB.updateDb(el);
+    }
+    
+    static Collection<CamionDto> findAll() throws DevisChantierDbException {
+        CamionSel sel = new CamionSel(0);
+        Collection<CamionDto> col = CamionDB.getCollection(sel);
+        return col;
+    }    
     
     static Collection<CamionDto> findBySel(CamionSel sel) throws DevisChantierDbException {
         Collection<CamionDto> col = CamionDB.getCollection(sel);
