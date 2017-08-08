@@ -26,13 +26,13 @@ public class EnginDB {
     public static List<EnginDto> getCollection(EnginSel sel) throws DevisChantierDbException {
         List<EnginDto> al = new ArrayList<>();
         try {
-            String query = "Select id_engin, nom, type_, reference, location, prixParHeure  FROM Engin ";
+            String query = "Select idEngin, nom, type_, reference, location, prixHeure  FROM Engin ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdEngin() != 0) {
-                where = where + " id_engin = ? ";
+                where = where + " idEngin = ? ";
             }
             
             /*Pour une valeur string */

@@ -26,14 +26,14 @@ public class DevisDB {
     public static List<DevisDto> getCollection(DevisSel sel) throws DevisChantierDbException {
         List<DevisDto> al = new ArrayList<>();
         try {
-            String query = "Select id_devis, designationDevis, statut, dateDevis FROM Devis ";
+            String query = "Select idDevis, designationDevis, statut, dateDevis FROM Devis ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             
             /*Pour une valeur numerique */
             if (sel.getIdDevis() != 0) {
-                where = where + " id_devis = ? ";
+                where = where + " idDevis = ? ";
             }
             
             /*Pour une valeur string */
@@ -82,7 +82,7 @@ public class DevisDB {
     public static void deleteDb(int id) throws DevisChantierDbException {
         try {
             java.sql.Statement stmt = DBManager.getConnection().createStatement();
-            stmt.execute("Delete from Devis where id_Devis=" + id);
+            stmt.execute("Delete from Devis where idDevis=" + id);
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("Devis: suppression impossible\n" + ex.getMessage());
         }

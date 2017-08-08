@@ -26,14 +26,14 @@ public class CodeReferenceDuChantierDB {
     public static List<CodeReferenceDuChantierDto> getCollection(CodeReferenceDuChantierSel sel) throws DevisChantierDbException {
         List<CodeReferenceDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_code_de_Reference_Du_Chantier, id_chantier, id_codeReference, quantite  FROM Code_Reference_Du_Chantier ";
+            String query = "Select idCodeReferenceDuChantier, idChantier, idCodeReference, quantite  FROM CodeReferenceDuChantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             
             if (sel.getIdCodeReferenceDuChantier() != 0) {
-                where = where + " id_code_de_Reference_Du_Chantier = ? ";
+                where = where + " idCodeReferenceDuChantier = ? ";
             }
             
             if (where.length() != 0) {
@@ -68,7 +68,7 @@ public class CodeReferenceDuChantierDB {
     public static void deleteDb(int id) throws DevisChantierDbException {
         try {
             java.sql.Statement stmt = DBManager.getConnection().createStatement();
-            stmt.execute("Delete from Code_Reference_Du_Chantier where id_code_de_Reference_Du_Chantier=" + id);
+            stmt.execute("Delete from CodeReferenceDuChantier where idCodeReferenceDuChantier=" + id);
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("CodeReferenceDuChantier: suppression impossible\n" + ex.getMessage());
         }
@@ -79,7 +79,7 @@ public class CodeReferenceDuChantierDB {
             java.sql.Connection connexion = DBManager.getConnection();
 
             java.sql.PreparedStatement update;
-            String sql = "Update Code_Reference_Du_Chantier set "
+            String sql = "Update CodeReferenceDuChantier set "
                     + "idChantier=? "
                     + "idCodeReference=? "
                     + "quantite=? "
@@ -98,11 +98,11 @@ public class CodeReferenceDuChantierDB {
 
     public static int insertDb(CodeReferenceDuChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CODE_REFERENCE_DU_CHANTIER);
+            int num = SequenceDB.getNextNum(SequenceDB.CODEREFERENCEDUCHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into CodeReferenceDuChantier(id_code_de_Reference_Du_Chantier, id_chantier, id_codeReference, quantite) "
+                    "Insert into CodeReferenceDuChantier(idCodeReferenceDuChantier, idChantier, idCodeReference, quantite) "
                     + "values(?, ?, ?, ?)");
             insert.setInt(1, el.getId());
             insert.setInt(2, el.getIdChantier());

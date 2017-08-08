@@ -26,14 +26,14 @@ public class CodeReferenceDB {
     public static List<CodeReferenceDto> getCollection(CodeReferenceSel sel) throws DevisChantierDbException {
         List<CodeReferenceDto> al = new ArrayList<>();
         try {
-            String query = "Select id_codeReference, reference, typeDeTravail, prixHtva FROM CodeReference ";
+            String query = "Select idCodeReference, reference, typeTravail, prixHtva FROM CodeReference ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             
             /*Pour une valeur numerique */
             if (sel.getIdCodeReference() != 0) {
-                where = where + " id_codeReference = ? ";
+                where = where + " idCodeReference = ? ";
             }
             
             /*Pour une valeur string */
@@ -93,7 +93,7 @@ public class CodeReferenceDB {
             java.sql.PreparedStatement update;
             String sql = "Update CodeReference set "
                     + "reference=? "
-                    + "typeDeTravail=? "
+                    + "typeTravail=? "
                     + "prixHtva=? "
                     + "where idCodeReference=?";
             System.out.println(sql);
@@ -114,7 +114,7 @@ public class CodeReferenceDB {
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into CodeReference(idCodeReference, reference, typeDeTravail, prixHtva) "
+                    "Insert into CodeReference(idCodeReference, reference, typeTravail, prixHtva) "
                     + "values(?, ?, ?, ?)");
             insert.setInt(1, el.getId());
             insert.setString(2, el.getReference());

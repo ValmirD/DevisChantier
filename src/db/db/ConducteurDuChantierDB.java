@@ -26,13 +26,13 @@ public class ConducteurDuChantierDB {
     public static List<ConducteurDuChantierDto> getCollection(ConducteurDuChantierSel sel) throws DevisChantierDbException {
         List<ConducteurDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_conducteur_Du_Chantier, id_chantier, id_conducteur, dateDebut, dateFin, nombreHeures FROM ConducteurDuChantier ";
+            String query = "Select idConducteurDuChantier, idChantier, idConducteur, dateDebut, dateFin, nombreHeures FROM ConducteurDuChantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdConducteurDuChantier() != 0) {
-                where = where + " id_conducteur_Du_Chantier = ? ";
+                where = where + " idConducteurDuChantier = ? ";
             }
             
                
@@ -70,7 +70,7 @@ public class ConducteurDuChantierDB {
     public static void deleteDb(int id) throws DevisChantierDbException {
         try {
             java.sql.Statement stmt = DBManager.getConnection().createStatement();
-            stmt.execute("Delete from Conducteur_Du_Chantier where id_Conducteur_Du_Chantier=" + id);
+            stmt.execute("Delete from ConducteurDuChantier where idConducteurDuChantier=" + id);
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("ConducteurDuChantier: suppression impossible\n" + ex.getMessage());
         }
@@ -81,7 +81,7 @@ public class ConducteurDuChantierDB {
             java.sql.Connection connexion = DBManager.getConnection();
 
             java.sql.PreparedStatement update;
-            String sql = "Update Conducteur_Du_Chantier set "
+            String sql = "Update ConducteurDuChantier set "
                     + "idChantier=? "
                     + "idConducteur=? "
                     + "dateDebut=? "
@@ -104,7 +104,7 @@ public class ConducteurDuChantierDB {
 
     public static int insertDb(ConducteurDuChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CONDUCTEUR_DU_CHANTIER);
+            int num = SequenceDB.getNextNum(SequenceDB.CONDUCTEURDUCHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(

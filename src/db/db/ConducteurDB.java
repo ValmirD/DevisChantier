@@ -26,14 +26,14 @@ public class ConducteurDB {
     public static List<ConducteurDto> getCollection(ConducteurSel sel) throws DevisChantierDbException {
         List<ConducteurDto> al = new ArrayList<>();
         try {
-            String query = "Select id_conducteur, nom, prenom, dateDeNaissance, numeroTelephone, numeroTelephonePro, email, remuneration, permis, entreeEnFonction, cout FROM Conducteur ";
+            String query = "Select idConducteur, nom, prenom, dateDeNaissance, numeroTelephone, numeroTelephonePro, email, remuneration, permis, entreeFonction, cout FROM Conducteur ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             
             /*Pour une valeur numerique */
             if (sel.getIdConducteur() != 0) {
-                where = where + " id_conducteur = ? ";
+                where = where + " idConducteur = ? ";
             }
             
             /*Pour une valeur string */
@@ -84,7 +84,7 @@ public class ConducteurDB {
                         rs.getString("prenom"), 
                         rs.getDate("dateNaissance"),
                         rs.getString("email"),
-                        rs.getDate("entreeEnFonction"),
+                        rs.getDate("entreeFonction"),
                         rs.getDouble("cout"),
                         rs.getBoolean("permis"),
                         rs.getInt("idChantier")
@@ -120,7 +120,7 @@ public class ConducteurDB {
                     + "email=? "
                     + "remuneration=? "
                     + "permis=? "
-                    + "entreeEnFonction=? "
+                    + "entreeFonction=? "
                     + "cout=? "
                     + "where idConducteur=?";
             System.out.println(sql);
@@ -148,7 +148,7 @@ public class ConducteurDB {
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into Conducteur(idConducteur, nom, prenom, dateNaissance, numeroTelephone, numeroTelephonePro, email, remuneration, permis, entreeEnFonction, cout) "
+                    "Insert into Conducteur(idConducteur, nom, prenom, dateNaissance, numeroTelephone, numeroTelephonePro, email, remuneration, permis, entreeFonction, cout) "
                     + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insert.setInt(1, el.getId());
             insert.setString(2, el.getNom());
