@@ -26,13 +26,14 @@ public class EnginDuChantierDB {
     public static List<EnginDuChantierDto> getCollection(EnginDuChantierSel sel) throws DevisChantierDbException {
         List<EnginDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_engin_Du_Chantier, id_chantier, id_engin, debutDisponibilite, finDisponibilite, nombreHeures, quantite FROM Engin_Du_Chantier ";
+            String query = "Select idenginDuChantier, idchantier, idengin, debutDisponibilite, finDisponibilite, nombreHeures, quantite FROM EnginDuChantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
+            
             /*Pour une valeur numerique */
             if (sel.getIdEnginDuChantier() != 0) {
-                where = where + " id_engin_Du_Chantier = ? ";
+                where = where + " idenginDuChantier = ? ";
             }
             
             if (where.length() != 0) {
@@ -44,7 +45,6 @@ public class EnginDuChantierDB {
                     stmt.setInt(i, sel.getIdEnginDuChantier());
                     i++;
                 }
-
             } else {
                 stmt = connexion.prepareStatement(query);
             }
@@ -57,12 +57,12 @@ public class EnginDuChantierDB {
                         rs.getDate("debutDisponibilite"),
                         rs.getDate("finDisponibilite"),
                         rs.getInt("idChantier"),
-                        rs.getInt("idEngin")                             
+                        rs.getInt("idEngin")                     
                 )
                 );
             }
         } catch (java.sql.SQLException eSQL) {
-            throw new DevisChantierDbException("Instanciation de Engin_Du_Chantier impossible:\nSQLException: " + eSQL.getMessage());
+            throw new DevisChantierDbException("Instanciation de EnginDuChantier impossible:\nSQLException: " + eSQL.getMessage());
         }
         return al;
     }
@@ -70,7 +70,7 @@ public class EnginDuChantierDB {
     public static void deleteDb(int id) throws DevisChantierDbException {
         try {
             java.sql.Statement stmt = DBManager.getConnection().createStatement();
-            stmt.execute("Delete from Engin_Du_Chantier where id_Engin_Du_Chantier=" + id);
+            stmt.execute("Delete from EnginDuChantier where idEnginDuChantier=" + id);
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("EnginDuChantier: suppression impossible\n" + ex.getMessage());
         }
@@ -82,30 +82,21 @@ public class EnginDuChantierDB {
 
             java.sql.PreparedStatement update;
             String sql = "Update EnginDuChantier set "
-                    + "categorie=? "
-                    + "tonnage=? "
-                    + "capacite=? "
-                    + "location=? "
-                    + "marque=? "
-                    + "modele=? "
-                    + "numeroChassis=? "
-                    + "carburant=? "
-                    + "prixHtva=? "
-                    + "ctAmortMois=? "
+                    + "idChantier=? "
+                    + "idEngin=? "
+                    + "debutDisponibilite=? "
+                    + "finDisponibilite=? "
+                    + "nombreHeures=? "
+                    + "quantite=? "
                     + "where idEnginDuChantier=?";
             System.out.println(sql);
             update = connexion.prepareStatement(sql);
-            update.setString(1, el.getCategorie());
-            update.setInt(2, el.getTonnage());
-            update.setDouble(3, el.getCapacite());
-            update.setBoolean(4, el.isLocation());
-            update.setString(5, el.getMarque());
-            update.setString(6, el.getModele());
-            update.setString(7, el.getNumeroChassis());
-            update.setString(8, el.getCarburant());
-            update.setDouble(9, el.getPrixHtva());
-            update.setDouble(10, el.getCtAmortMois());
-            update.setInt(11, el.getId());
+            update.setInt(1, el.getIdChantier());
+            update.setInt(2, el.getIdEngin());
+            update.setDate(3, el.getDebutDisponibilite());
+            update.setDate(4, el.getFinDisponibilite());
+            update.setDouble(5, el.getQuantite());
+            update.setDouble(11, el.getId());
             update.executeUpdate();
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("EnginDuChantier, modification impossible:\n" + ex.getMessage());
@@ -114,23 +105,19 @@ public class EnginDuChantierDB {
 
     public static int insertDb(EnginDuChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.ENGINDUCHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into EnginDuChantier(idEnginDuChantier, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixHtva, ctAmortMois) "
-                    + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "Insert into EnginDuChantier(idEnginDuChantier, idChantier, idEngin, debutDisponibilite, finDisponibilite, nombreHeures, quantite) "
+                    + "values(?, ?, ?, ?, ?, ?, ?)");
             insert.setInt(1, el.getId());
-            insert.setString(2, el.getCategorie());
-            insert.setInt(3, el.getTonnage());
-            insert.setDouble(4, el.getCapacite());
-            insert.setBoolean(5, el.isLocation());
-            insert.setString(6, el.getMarque());
-            insert.setString(7, el.getModele());
-            insert.setString(8, el.getNumeroChassis());
-            insert.setString(9, el.getCarburant());
-            insert.setDouble(10, el.getPrixHtva());
-            insert.setDouble(11, el.getCtAmortMois());
+            insert.setInt(2, el.getIdChantier());
+            insert.setInt(3, el.getIdEngin());
+            insert.setDate(4, el.getDebutDisponibilite());
+            insert.setDate(5, el.getFinDisponibilite());
+            insert.setDouble(6, el.getNombreHeures());
+            insert.setDouble(7, el.getQuantite());
             insert.executeUpdate();
             return num;
         } catch (DevisChantierDbException | SQLException ex) {
