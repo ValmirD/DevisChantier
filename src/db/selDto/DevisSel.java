@@ -15,12 +15,10 @@ public class DevisSel {
     
     private int idDevis;
     private String designationDevis;
-    private Date dateDevis;
 
-    public DevisSel(int idDevis, String designationDevis, Date dateDevis) {
+    public DevisSel(int idDevis, String designationDevis) {
         this.idDevis = idDevis;
         this.designationDevis = designationDevis;
-        this.dateDevis = dateDevis;
     }
     
     public DevisSel(int idDevis) {
@@ -34,11 +32,7 @@ public class DevisSel {
     public String getDesignationDevis() {
         return designationDevis;
     }
-
-    public Date getDateDevis() {
-        return dateDevis;
-    }
-    
+ 
     
     
     

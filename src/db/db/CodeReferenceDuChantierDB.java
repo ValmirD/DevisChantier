@@ -26,31 +26,16 @@ public class CodeReferenceDuChantierDB {
     public static List<CodeReferenceDuChantierDto> getCollection(CodeReferenceDuChantierSel sel) throws DevisChantierDbException {
         List<CodeReferenceDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_codeReferenceDuChantier, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM CodeReferenceDuChantier ";
+            String query = "Select id_code_de_Reference_Du_Chantier, id_chantier, id_codeReference, quantite  FROM Code_Reference_Du_Chantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
+            
             if (sel.getIdCodeReferenceDuChantier() != 0) {
-                where = where + " id_codeReferenceDuChantier = ? ";
+                where = where + " id_code_de_Reference_Du_Chantier = ? ";
             }
             
-            /*Pour une valeur string */
-            if (sel.getMarque()!= null && !sel.getMarque().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " marque like ? ";
-            }
-            
-            /*Pour une valeur string */
-            if (sel.getModele()!= null && !sel.getModele().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " modele like ? ";
-            }
-                        
             if (where.length() != 0) {
                 where = " where " + where;
                 query = query + where;
@@ -60,14 +45,7 @@ public class CodeReferenceDuChantierDB {
                     stmt.setInt(i, sel.getIdCodeReferenceDuChantier());
                     i++;
                 }
-                if (sel.getMarque() != null && !sel.getMarque().equals("")) {
-                    stmt.setString(i, sel.getMarque() + "%");
-                    i++;
-                }
-                if (sel.getModele() != null && !sel.getModele().equals("")) {
-                    stmt.setString(i, sel.getModele() + "%");
-                    i++;
-                }
+
             } else {
                 stmt = connexion.prepareStatement(query);
             }
@@ -75,16 +53,9 @@ public class CodeReferenceDuChantierDB {
             while (rs.next()) {
                 al.add(new CodeReferenceDuChantierDto(
                         rs.getInt("idCodeReferenceDuChantier"), 
-                        rs.getString("categorie"), 
-                        rs.getInt("tonnage"), 
-                        rs.getDouble("capacite"),
-                        rs.getBoolean("location"),
-                        rs.getString("marque"),
-                        rs.getString("modele"),
-                        rs.getString("numeroChassis"),
-                        rs.getString("carburant"),
-                        rs.getDouble("prixHtva"),
-                        rs.getDouble("ctAmortMois")
+                        rs.getDouble("quantite"), 
+                        rs.getInt("idChantier"), 
+                        rs.getInt("idCodeReference")
                 )
                 );
             }
@@ -97,7 +68,7 @@ public class CodeReferenceDuChantierDB {
     public static void deleteDb(int id) throws DevisChantierDbException {
         try {
             java.sql.Statement stmt = DBManager.getConnection().createStatement();
-            stmt.execute("Delete from CodeReferenceDuChantier where idCodeReferenceDuChantier=" + id);
+            stmt.execute("Delete from Code_Reference_Du_Chantier where id_code_de_Reference_Du_Chantier=" + id);
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("CodeReferenceDuChantier: suppression impossible\n" + ex.getMessage());
         }
@@ -108,31 +79,17 @@ public class CodeReferenceDuChantierDB {
             java.sql.Connection connexion = DBManager.getConnection();
 
             java.sql.PreparedStatement update;
-            String sql = "Update CodeReferenceDuChantier set "
-                    + "categorie=? "
-                    + "tonnage=? "
-                    + "capacite=? "
-                    + "location=? "
-                    + "marque=? "
-                    + "modele=? "
-                    + "numeroChassis=? "
-                    + "carburant=? "
-                    + "prixHtva=? "
-                    + "ctAmortMois=? "
+            String sql = "Update Code_Reference_Du_Chantier set "
+                    + "idChantier=? "
+                    + "idCodeReference=? "
+                    + "quantite=? "
                     + "where idCodeReferenceDuChantier=?";
             System.out.println(sql);
             update = connexion.prepareStatement(sql);
-            update.setString(1, el.getCategorie());
-            update.setInt(2, el.getTonnage());
-            update.setDouble(3, el.getCapacite());
-            update.setBoolean(4, el.isLocation());
-            update.setString(5, el.getMarque());
-            update.setString(6, el.getModele());
-            update.setString(7, el.getNumeroChassis());
-            update.setString(8, el.getCarburant());
-            update.setDouble(9, el.getPrixHtva());
-            update.setDouble(10, el.getCtAmortMois());
-            update.setInt(11, el.getId());
+            update.setInt(1, el.getIdChantier());
+            update.setInt(2, el.getIdCodeReference());
+            update.setDouble(3, el.getQuantite());
+            update.setInt(4, el.getId());
             update.executeUpdate();
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("CodeReferenceDuChantier, modification impossible:\n" + ex.getMessage());
@@ -141,23 +98,16 @@ public class CodeReferenceDuChantierDB {
 
     public static int insertDb(CodeReferenceDuChantierDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.CODE_REFERENCE_DU_CHANTIER);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into CodeReferenceDuChantier(idCodeReferenceDuChantier, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixHtva, ctAmortMois) "
-                    + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "Insert into CodeReferenceDuChantier(id_code_de_Reference_Du_Chantier, id_chantier, id_codeReference, quantite) "
+                    + "values(?, ?, ?, ?)");
             insert.setInt(1, el.getId());
-            insert.setString(2, el.getCategorie());
-            insert.setInt(3, el.getTonnage());
-            insert.setDouble(4, el.getCapacite());
-            insert.setBoolean(5, el.isLocation());
-            insert.setString(6, el.getMarque());
-            insert.setString(7, el.getModele());
-            insert.setString(8, el.getNumeroChassis());
-            insert.setString(9, el.getCarburant());
-            insert.setDouble(10, el.getPrixHtva());
-            insert.setDouble(11, el.getCtAmortMois());
+            insert.setInt(2, el.getIdChantier());
+            insert.setInt(3, el.getIdCodeReference());
+            insert.setDouble(4, el.getQuantite());
             insert.executeUpdate();
             return num;
         } catch (DevisChantierDbException | SQLException ex) {

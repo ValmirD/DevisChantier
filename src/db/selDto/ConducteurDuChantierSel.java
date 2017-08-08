@@ -14,32 +14,15 @@ import java.sql.Date;
 public class ConducteurDuChantierSel {
     
     private int idConducteurDuChantier;
-    private Date dateDebut;
-    private Date dateFin;
 
-    public ConducteurDuChantierSel(int idConducteurDuChantier, Date dateDebut, Date dateFin) {
-        this.idConducteurDuChantier = idConducteurDuChantier;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-    }
-    
     public ConducteurDuChantierSel(int idConducteurDuChantier) {
         this.idConducteurDuChantier = idConducteurDuChantier;
-    }    
+    }
 
     public int getIdConducteurDuChantier() {
         return idConducteurDuChantier;
     }
-
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public Date getDateFin() {
-        return dateFin;
-    }
-    
-    
+   
     
     
 }

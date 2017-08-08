@@ -15,15 +15,12 @@ public class ConducteurSel {
     private int idConducteur;
     private String nom;
     private String prenom;
-    private String numeroTelephone;
-    private String email;
 
-    public ConducteurSel(int idConducteur, String nom, String prenom, String numeroTelephone, String email) {
+    public ConducteurSel(int idConducteur, String nom, String prenom) {
         this.idConducteur = idConducteur;
         this.nom = nom;
         this.prenom = prenom;
-        this.numeroTelephone = numeroTelephone;
-        this.email = email;
+
     }
     
     public ConducteurSel(int idConducteur) {
@@ -42,14 +39,7 @@ public class ConducteurSel {
         return prenom;
     }
 
-    public String getNumeroTelephone() {
-        return numeroTelephone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-    
+ 
     
 
     

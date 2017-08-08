@@ -26,31 +26,15 @@ public class EnginDuChantierDB {
     public static List<EnginDuChantierDto> getCollection(EnginDuChantierSel sel) throws DevisChantierDbException {
         List<EnginDuChantierDto> al = new ArrayList<>();
         try {
-            String query = "Select id_enginDuChantier, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM EnginDuChantier ";
+            String query = "Select id_engin_Du_Chantier, id_chantier, id_engin, debutDisponibilite, finDisponibilite, nombreHeures, quantite FROM Engin_Du_Chantier ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
             /*Pour une valeur numerique */
             if (sel.getIdEnginDuChantier() != 0) {
-                where = where + " id_enginDuChantier = ? ";
+                where = where + " id_engin_Du_Chantier = ? ";
             }
             
-            /*Pour une valeur string */
-            if (sel.getMarque()!= null && !sel.getMarque().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " marque like ? ";
-            }
-            
-            /*Pour une valeur string */
-            if (sel.getModele()!= null && !sel.getModele().equals("")) {
-                if (!where.equals("")) {
-                    where = where + " AND ";
-                }
-                where = where + " modele like ? ";
-            }
-                        
             if (where.length() != 0) {
                 where = " where " + where;
                 query = query + where;
@@ -60,14 +44,7 @@ public class EnginDuChantierDB {
                     stmt.setInt(i, sel.getIdEnginDuChantier());
                     i++;
                 }
-                if (sel.getMarque() != null && !sel.getMarque().equals("")) {
-                    stmt.setString(i, sel.getMarque() + "%");
-                    i++;
-                }
-                if (sel.getModele() != null && !sel.getModele().equals("")) {
-                    stmt.setString(i, sel.getModele() + "%");
-                    i++;
-                }
+
             } else {
                 stmt = connexion.prepareStatement(query);
             }
@@ -75,21 +52,17 @@ public class EnginDuChantierDB {
             while (rs.next()) {
                 al.add(new EnginDuChantierDto(
                         rs.getInt("idEnginDuChantier"), 
-                        rs.getString("categorie"), 
-                        rs.getInt("tonnage"), 
-                        rs.getDouble("capacite"),
-                        rs.getBoolean("location"),
-                        rs.getString("marque"),
-                        rs.getString("modele"),
-                        rs.getString("numeroChassis"),
-                        rs.getString("carburant"),
-                        rs.getDouble("prixHtva"),
-                        rs.getDouble("ctAmortMois")
+                        rs.getDouble("quantite"), 
+                        rs.getDouble("nombreHeures"), 
+                        rs.getDate("debutDisponibilite"),
+                        rs.getDate("finDisponibilite"),
+                        rs.getInt("idChantier"),
+                        rs.getInt("idEngin")                             
                 )
                 );
             }
         } catch (java.sql.SQLException eSQL) {
-            throw new DevisChantierDbException("Instanciation de EnginDuChantier impossible:\nSQLException: " + eSQL.getMessage());
+            throw new DevisChantierDbException("Instanciation de Engin_Du_Chantier impossible:\nSQLException: " + eSQL.getMessage());
         }
         return al;
     }
@@ -97,7 +70,7 @@ public class EnginDuChantierDB {
     public static void deleteDb(int id) throws DevisChantierDbException {
         try {
             java.sql.Statement stmt = DBManager.getConnection().createStatement();
-            stmt.execute("Delete from EnginDuChantier where idEnginDuChantier=" + id);
+            stmt.execute("Delete from Engin_Du_Chantier where id_Engin_Du_Chantier=" + id);
         } catch (DevisChantierDbException | SQLException ex) {
             throw new DevisChantierDbException("EnginDuChantier: suppression impossible\n" + ex.getMessage());
         }

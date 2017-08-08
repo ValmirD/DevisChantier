@@ -26,29 +26,30 @@ public class ConducteurDB {
     public static List<ConducteurDto> getCollection(ConducteurSel sel) throws DevisChantierDbException {
         List<ConducteurDto> al = new ArrayList<>();
         try {
-            String query = "Select id_conducteur, categorie, tonnage, capacite, location, marque, modele, numerodechassis, carburant, prixhtva, ctamortmois FROM Conducteur ";
+            String query = "Select id_conducteur, nom, prenom, dateDeNaissance, numeroTelephone, numeroTelephonePro, email, remuneration, permis, entreeEnFonction, cout FROM Conducteur ";
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement stmt;
             String where = "";
+            
             /*Pour une valeur numerique */
             if (sel.getIdConducteur() != 0) {
                 where = where + " id_conducteur = ? ";
             }
             
             /*Pour une valeur string */
-            if (sel.getMarque()!= null && !sel.getMarque().equals("")) {
+            if (sel.getNom()!= null && !sel.getNom().equals("")) {
                 if (!where.equals("")) {
                     where = where + " AND ";
                 }
-                where = where + " marque like ? ";
+                where = where + " nom like ? ";
             }
             
             /*Pour une valeur string */
-            if (sel.getModele()!= null && !sel.getModele().equals("")) {
+            if (sel.getPrenom()!= null && !sel.getPrenom().equals("")) {
                 if (!where.equals("")) {
                     where = where + " AND ";
                 }
-                where = where + " modele like ? ";
+                where = where + " prenom like ? ";
             }
                         
             if (where.length() != 0) {
@@ -56,16 +57,17 @@ public class ConducteurDB {
                 query = query + where;
                 stmt = connexion.prepareStatement(query);
                 int i = 1;
+                
                 if (sel.getIdConducteur() != 0) {
                     stmt.setInt(i, sel.getIdConducteur());
                     i++;
                 }
-                if (sel.getMarque() != null && !sel.getMarque().equals("")) {
-                    stmt.setString(i, sel.getMarque() + "%");
+                if (sel.getNom() != null && !sel.getNom().equals("")) {
+                    stmt.setString(i, sel.getNom() + "%");
                     i++;
                 }
-                if (sel.getModele() != null && !sel.getModele().equals("")) {
-                    stmt.setString(i, sel.getModele() + "%");
+                if (sel.getPrenom() != null && !sel.getPrenom().equals("")) {
+                    stmt.setString(i, sel.getPrenom() + "%");
                     i++;
                 }
             } else {
@@ -75,16 +77,17 @@ public class ConducteurDB {
             while (rs.next()) {
                 al.add(new ConducteurDto(
                         rs.getInt("idConducteur"), 
-                        rs.getString("categorie"), 
-                        rs.getInt("tonnage"), 
-                        rs.getDouble("capacite"),
-                        rs.getBoolean("location"),
-                        rs.getString("marque"),
-                        rs.getString("modele"),
-                        rs.getString("numeroChassis"),
-                        rs.getString("carburant"),
-                        rs.getDouble("prixHtva"),
-                        rs.getDouble("ctAmortMois")
+                        rs.getString("numeroTelephonePro"),
+                        rs.getString("numeroTelephone"),
+                        rs.getDouble("remuneration"),
+                        rs.getString("nom"), 
+                        rs.getString("prenom"), 
+                        rs.getDate("dateNaissance"),
+                        rs.getString("email"),
+                        rs.getDate("entreeEnFonction"),
+                        rs.getDouble("cout"),
+                        rs.getBoolean("permis"),
+                        rs.getInt("idChantier")
                 )
                 );
             }
@@ -109,29 +112,29 @@ public class ConducteurDB {
 
             java.sql.PreparedStatement update;
             String sql = "Update Conducteur set "
-                    + "categorie=? "
-                    + "tonnage=? "
-                    + "capacite=? "
-                    + "location=? "
-                    + "marque=? "
-                    + "modele=? "
-                    + "numeroChassis=? "
-                    + "carburant=? "
-                    + "prixHtva=? "
-                    + "ctAmortMois=? "
+                    + "nom=? "
+                    + "prenom=? "
+                    + "dateDeNaissance=? "
+                    + "numeroTelephone=? "
+                    + "numeroTelephonePro=? "
+                    + "email=? "
+                    + "remuneration=? "
+                    + "permis=? "
+                    + "entreeEnFonction=? "
+                    + "cout=? "
                     + "where idConducteur=?";
             System.out.println(sql);
             update = connexion.prepareStatement(sql);
-            update.setString(1, el.getCategorie());
-            update.setInt(2, el.getTonnage());
-            update.setDouble(3, el.getCapacite());
-            update.setBoolean(4, el.isLocation());
-            update.setString(5, el.getMarque());
-            update.setString(6, el.getModele());
-            update.setString(7, el.getNumeroChassis());
-            update.setString(8, el.getCarburant());
-            update.setDouble(9, el.getPrixHtva());
-            update.setDouble(10, el.getCtAmortMois());
+            update.setString(1, el.getNom());
+            update.setString(2, el.getPrenom());
+            update.setDate(3, el.getDateNaissance());
+            update.setString(4, el.getNumeroTelephone());
+            update.setString(5, el.getNumeroTelephonePro());
+            update.setString(6, el.getEmail());
+            update.setDouble(7, el.getRemuneration());
+            update.setBoolean(8, el.isPermis());
+            update.setDate(9, el.getEntreeFonction());
+            update.setDouble(10, el.getCout());
             update.setInt(11, el.getId());
             update.executeUpdate();
         } catch (DevisChantierDbException | SQLException ex) {
@@ -141,23 +144,23 @@ public class ConducteurDB {
 
     public static int insertDb(ConducteurDto el) throws DevisChantierDbException {
         try {
-            int num = SequenceDB.getNextNum(SequenceDB.CAMION);
+            int num = SequenceDB.getNextNum(SequenceDB.CONDUCTEUR);
             java.sql.Connection connexion = DBManager.getConnection();
             java.sql.PreparedStatement insert;
             insert = connexion.prepareStatement(
-                    "Insert into Conducteur(idConducteur, categorie, tonnage, capacite, location, marque, modele, numeroChassis, carburant, prixHtva, ctAmortMois) "
+                    "Insert into Conducteur(idConducteur, nom, prenom, dateNaissance, numeroTelephone, numeroTelephonePro, email, remuneration, permis, entreeEnFonction, cout) "
                     + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             insert.setInt(1, el.getId());
-            insert.setString(2, el.getCategorie());
-            insert.setInt(3, el.getTonnage());
-            insert.setDouble(4, el.getCapacite());
-            insert.setBoolean(5, el.isLocation());
-            insert.setString(6, el.getMarque());
-            insert.setString(7, el.getModele());
-            insert.setString(8, el.getNumeroChassis());
-            insert.setString(9, el.getCarburant());
-            insert.setDouble(10, el.getPrixHtva());
-            insert.setDouble(11, el.getCtAmortMois());
+            insert.setString(2, el.getNom());
+            insert.setString(3, el.getPrenom());
+            insert.setDate(4, el.getDateNaissance());
+            insert.setString(5, el.getNumeroTelephone());
+            insert.setString(6, el.getNumeroTelephonePro());
+            insert.setString(7, el.getEmail());
+            insert.setDouble(8, el.getRemuneration());
+            insert.setBoolean(9, el.isPermis());
+            insert.setDate(10, el.getEntreeFonction());
+            insert.setDouble(11, el.getCout());
             insert.executeUpdate();
             return num;
         } catch (DevisChantierDbException | SQLException ex) {
