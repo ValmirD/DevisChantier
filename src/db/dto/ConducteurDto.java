@@ -12,7 +12,8 @@ import java.sql.Date;
  * @author Vali
  */
 public class ConducteurDto extends EntityDto<Integer> {
-    
+
+    private String password;
     private String numeroTelephonePro;
     private String numeroTelephone;
     private double remuneration;
@@ -25,8 +26,9 @@ public class ConducteurDto extends EntityDto<Integer> {
     private boolean permis;
     private int idChantier;
 
-    public ConducteurDto(int idConducteur, String numeroTelephonePro, String numeroTelephone, double remuneration, String nom, String prenom, Date dateNaissance, String email, Date entreeFonction, double cout, boolean permis ,int idChantier) {
+    public ConducteurDto(int idConducteur, String password, String numeroTelephonePro, String numeroTelephone, double remuneration, String nom, String prenom, Date dateNaissance, String email, Date entreeFonction, double cout, boolean permis, int idChantier) {
         this.id = idConducteur;
+        this.password = password;
         this.numeroTelephonePro = numeroTelephonePro;
         this.numeroTelephone = numeroTelephone;
         this.remuneration = remuneration;
@@ -37,6 +39,10 @@ public class ConducteurDto extends EntityDto<Integer> {
         this.entreeFonction = entreeFonction;
         this.cout = cout;
         this.idChantier = idChantier;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getNumeroTelephonePro() {
@@ -78,11 +84,9 @@ public class ConducteurDto extends EntityDto<Integer> {
     public boolean isPermis() {
         return permis;
     }
-    
+
     public int getIdChantier() {
         return idChantier;
-    }    
-    
-    
-    
+    }
+
 }

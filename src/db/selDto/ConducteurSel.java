@@ -13,11 +13,13 @@ package db.selDto;
 public class ConducteurSel {
     
     private int idConducteur;
+    private String password;
     private String nom;
     private String prenom;
 
-    public ConducteurSel(int idConducteur, String nom, String prenom) {
+    public ConducteurSel(int idConducteur, String password, String nom, String prenom) {
         this.idConducteur = idConducteur;
+        this.password = password;
         this.nom = nom;
         this.prenom = prenom;
 
@@ -29,6 +31,10 @@ public class ConducteurSel {
 
     public int getIdConducteur() {
         return idConducteur;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getNom() {

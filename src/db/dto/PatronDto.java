@@ -10,18 +10,22 @@ package db.dto;
  * @author Vali
  */
 public class PatronDto extends EntityDto<Integer> {
-    
-    private boolean validationProjet;
 
-    public PatronDto(int idPatron, boolean validationProjet) {
+    private boolean validationProjet;
+    private String password;
+
+    public PatronDto(int idPatron, String password, boolean validationProjet) {
         this.id = idPatron;
+        this.password = password;
         this.validationProjet = validationProjet;
     }
 
     public boolean isValidationProjet() {
         return validationProjet;
     }
-    
-    
-    
+
+    public String getPassword() {
+        return password;
+    }
+
 }

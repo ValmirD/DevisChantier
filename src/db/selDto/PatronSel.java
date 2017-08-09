@@ -10,8 +10,13 @@ package db.selDto;
  * @author Vali
  */
 public class PatronSel {
-    
+
     private int idPatron;
+    private String password;
+
+    public PatronSel(int idPatron, String password) {
+        this.idPatron = idPatron;
+    }
 
     public PatronSel(int idPatron) {
         this.idPatron = idPatron;
@@ -20,6 +25,9 @@ public class PatronSel {
     public int getIdPatron() {
         return idPatron;
     }
-    
-    
+
+    public String getPassword() {
+        return password;
+    }
+
 }
