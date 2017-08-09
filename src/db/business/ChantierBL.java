@@ -17,19 +17,27 @@ import java.util.Collection;
  */
 public class ChantierBL {
     
-    static ChantierDto findById(int id) throws DevisChantierDbException {
-        ChantierSel sel = new ChantierSel(id);
-        Collection<ChantierDto> col = ChantierDB.getCollection(sel);
-        if (col.size() == 1) {
-            return col.iterator().next();
-        } else {
-            return null;
-        }
+    static int add(ChantierDto el) throws DevisChantierDbException {
+        return ChantierDB.insertDb(el);
     }
+
+    static void delete(int id) throws DevisChantierDbException {
+        ChantierDB.deleteDb(id);
+    }
+
+    static void update(ChantierDto el) throws DevisChantierDbException {
+        ChantierDB.updateDb(el);
+    }
+    
+    static Collection<ChantierDto> findAll() throws DevisChantierDbException {
+        ChantierSel sel = new ChantierSel(0);
+        Collection<ChantierDto> col = ChantierDB.getCollection(sel);
+        return col;
+    }    
     
     static Collection<ChantierDto> findBySel(ChantierSel sel) throws DevisChantierDbException {
         Collection<ChantierDto> col = ChantierDB.getCollection(sel);
         return col;
-    }    
+    }  
     
 }

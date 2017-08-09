@@ -5,16 +5,39 @@
  */
 package db.business;
 
-import db.db.CamionDB;
-import db.dto.CamionDto;
+import db.db.DevisDB;
+import db.dto.DevisDto;
 import db.exception.DevisChantierDbException;
-import db.selDto.CamionSel;
+import db.selDto.DevisSel;
 import java.util.Collection;
 
 /**
  *
- * @author Valmir
+ * @author Vali
  */
 public class DevisBL {
+
+    static int add(DevisDto el) throws DevisChantierDbException {
+        return DevisDB.insertDb(el);
+    }
+
+    static void delete(int id) throws DevisChantierDbException {
+        DevisDB.deleteDb(id);
+    }
+
+    static void update(DevisDto el) throws DevisChantierDbException {
+        DevisDB.updateDb(el);
+    }
+    
+    static Collection<DevisDto> findAll() throws DevisChantierDbException {
+        DevisSel sel = new DevisSel(0);
+        Collection<DevisDto> col = DevisDB.getCollection(sel);
+        return col;
+    }    
+    
+    static Collection<DevisDto> findBySel(DevisSel sel) throws DevisChantierDbException {
+        Collection<DevisDto> col = DevisDB.getCollection(sel);
+        return col;
+    }
     
 }

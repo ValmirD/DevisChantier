@@ -14,7 +14,7 @@ import java.util.Collection;
 
 /**
  *
- * @author Marco
+ * @author Vali
  */
 public class FacadeDB {
     

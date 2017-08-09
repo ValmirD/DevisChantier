@@ -5,17 +5,40 @@
  */
 package db.business;
 
-import db.db.CamionDB;
-import db.dto.CamionDto;
+import db.db.PetitMaterielDuChantierDB;
+import db.dto.PetitMaterielDuChantierDto;
 import db.exception.DevisChantierDbException;
-import db.selDto.CamionSel;
+import db.selDto.PetitMaterielDuChantierSel;
 import java.util.Collection;
 
 
 /**
  *
- * @author Valmir
+ * @author Vali
  */
 public class PetitMaterielDuChantierBL {
+
+    static int add(PetitMaterielDuChantierDto el) throws DevisChantierDbException {
+        return PetitMaterielDuChantierDB.insertDb(el);
+    }
+
+    static void delete(int id) throws DevisChantierDbException {
+        PetitMaterielDuChantierDB.deleteDb(id);
+    }
+
+    static void update(PetitMaterielDuChantierDto el) throws DevisChantierDbException {
+        PetitMaterielDuChantierDB.updateDb(el);
+    }
+    
+    static Collection<PetitMaterielDuChantierDto> findAll() throws DevisChantierDbException {
+        PetitMaterielDuChantierSel sel = new PetitMaterielDuChantierSel(0);
+        Collection<PetitMaterielDuChantierDto> col = PetitMaterielDuChantierDB.getCollection(sel);
+        return col;
+    }    
+    
+    static Collection<PetitMaterielDuChantierDto> findBySel(PetitMaterielDuChantierSel sel) throws DevisChantierDbException {
+        Collection<PetitMaterielDuChantierDto> col = PetitMaterielDuChantierDB.getCollection(sel);
+        return col;
+    }
     
 }
