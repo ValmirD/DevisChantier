@@ -13,8 +13,6 @@ import java.sql.Date;
  */
 public class ChantierDto extends EntityDto<Integer> {
     
-    private int idConducteur;
-    private int idOuvrier;
     private int idClient;
     private int idDevis;
     private String localisation;
@@ -26,10 +24,8 @@ public class ChantierDto extends EntityDto<Integer> {
     private Date dateFinPrevue;
     private Date dateFinEffective;
 
-    public ChantierDto(int idChantier, int idConducteur, int idOuvrier, int idClient, int idDevis, String localisation, String designationProjet, String commentaire, Date dateCreationProjet, Date dateDebutPrevue, Date dateDebutEffective, Date dateFinPrevue, Date dateFinEffective) {
+    public ChantierDto(int idChantier, int idClient, int idDevis, String localisation, String designationProjet, String commentaire, Date dateCreationProjet, Date dateDebutPrevue, Date dateDebutEffective, Date dateFinPrevue, Date dateFinEffective) {
         this.id = idChantier;
-        this.idConducteur = idConducteur;
-        this.idOuvrier = idOuvrier;
         this.idClient = idClient;
         this.idDevis = idDevis;
         this.localisation = localisation;
@@ -40,14 +36,6 @@ public class ChantierDto extends EntityDto<Integer> {
         this.dateDebutPrevue = dateDebutEffective;
         this.dateFinPrevue = dateFinPrevue;
         this.dateFinPrevue = dateFinEffective;
-    }
-
-    public int getIdConducteur() {
-        return idConducteur;
-    }
-
-    public int getIdOuvrier() {
-        return idOuvrier;
     }
 
     public int getIdClient() {

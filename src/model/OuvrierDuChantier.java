@@ -10,5 +10,9 @@ package model;
  * @author Vali
  */
 public class OuvrierDuChantier {
-    
+
+    public void calculMontant() {
+        montant = db.dto.
+    }
+
 }
