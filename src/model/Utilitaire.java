@@ -5,11 +5,14 @@
  */
 package model;
 
+
+
 /**
  *
  * @author Vali
  */
-public class OuvrierDuChantier {
-
-
+public class Utilitaire {
+    
+    
+    
 }
